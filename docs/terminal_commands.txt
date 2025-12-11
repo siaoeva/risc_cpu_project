@@ -1,0 +1,11 @@
+Compilation:
+verilator -Wall --trace -sv --binary --top-module tb_alu rtl/cpu_defs.sv rtl/alu.sv tb/tb_alu.sv
+verilator -Wall --trace -sv --binary --top-module tb_regfile rtl/regfile.sv rtl/cpu_defs.sv tb/tb_regfile.sv
+
+Run:
+./obj_dir/Vtb_alu
+./obj_dir/Vtb_regfile
+
+View waveforms:
+gtkwave tb_alu.vcd &
+gtkwave tb_regfile.vcd &
