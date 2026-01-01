@@ -18,6 +18,7 @@ module alu(
             ALU_XOR: result = a ^ b; 
             ALU_SLL: result = a << b[4:0]; //SLL shift left logical, mask b since a is 32 bit and should only be shifted by max 31 bit
             ALU_SRL: result = a >> b[4:0]; //SRL shift right logical
+            ALU_SRA: result = $signed(a) >>> b[4:0] //SRA shift right arithmetic, basically SRL for signed integers
             ALU_SLT: result = ($signed(a) < $signed(b)) ? 32'd1 : 32'd0; //SLT set less than (signed) (condition) ? value_if_true : value_if_false
             ALU_SLTU: result = (a < b) ? 32'd1 : 32'd0; //SLT set less than unsigned
             default: result = 32'd0; 
