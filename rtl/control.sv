@@ -3,25 +3,29 @@
 `timescale 1ns/1ps
 
 module control(
-    input   logic [6:0]     opcode, //defines type/category of instruction
-    input   logic [2:0]     funct3, //further specifies the operation within type provided by opcode
-    input   logic [6:0]     funct7, //specifically for R-type ALU operations (and a few others), further differentiates operations
+    input   logic [6:0]         opcode, //defines type/category of instruction
+    input   logic [2:0]         funct3, //further specifies the operation within type provided by opcode
+    input   logic [6:0]         funct7, //specifically for R-type ALU operations (and a few others), further differentiates operations
 
-    output  cpu_defs::AluOp alu_op, //which alu operation to perform for alu.sv
-    output  logic           reg_write, //write enable for regfile.sv
-    output  logic           mem_write, //write enable for data_mem.sv
-    output  logic           branch, //whether it's a branch instruction 
-    output  logic           alu_src //controls alu's 2nd operand, 0 = use rs2, 1 = use immediate
+    output  cpu_defs::AluOp     alu_op, //which alu operation to perform for alu.sv
+    output  logic               reg_write, //write enable for regfile.sv
+    output  logic               mem_write, //write enable for data_mem.sv
+    output  logic               branch, //whether it's a branch instruction 
+    output  logic               alu_src, //controls alu's 2nd operand, 0 = use rs2, 1 = use immediate
+    output  cpu_defs::ImmType   imm_sel, //which instruction type to correctly extract immediate
+    output  logic               mem_to_reg // 0 if writing ALU result, 1 if writing mem load data to reg
 );
     import cpu_defs::*;
 
-    always_comb begin
+    always_comb begin : control_logic
         //default
         alu_op      = ALU_ILLEGAL;
         reg_write   = 0;
         mem_write   = 0;
         branch      = 0;
         alu_src     = 0;
+        imm_sel     = IMM_ILLEGAL;
+        mem_to_reg  = 0;
         
         case(opcode)
             //R-type (ADD, SUB, AND, OR, XOR, etc. )
@@ -52,6 +56,7 @@ module control(
             7'b0010011: begin
                 reg_write   = 1;
                 alu_src     = 1; //use immediate
+                imm_sel     = IMM_I;
 
                 case (funct3)
                     3'b000:     alu_op = ALU_ADD;
@@ -80,6 +85,7 @@ module control(
                 reg_write = 1;
                 alu_src = 1; // use immediate for address = base register (rs1) + immediate offset
                 alu_op = ALU_ADD; // used for address calculation
+                mem_to_reg = 1;
 
             end
 
@@ -88,12 +94,14 @@ module control(
                 mem_write = 1;
                 alu_src = 1; // base + offset
                 alu_op = ALU_ADD; // address calc
+                imm_sel = IMM_S;
             end
 
             //Branch
             7'b1100011: begin
                 branch = 1;
                 alu_src = 0; // ALU uses rs2, not immediate
+                imm_sel = IMM_B;
                 case(funct3)
                     3'b000: alu_op = ALU_SUB; //BEQ, equal, use sub to determine if two are equal. 
                     3'b001: alu_op = ALU_SUB; //BNE, not equal
@@ -106,6 +114,8 @@ module control(
                 endcase
 
             end
+
+            //add U-type, J-type expansion later
 
         
         endcase

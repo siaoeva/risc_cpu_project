@@ -1,0 +1,7 @@
+PC -> instr_mem -> control/regfile -> ALU/data_mem -> regfile
+
+IF, instruction fetch
+ID, decode, read registers
+EX, execute, ALU/branch decision/address calc
+MEM, data memory access
+WB, writeback

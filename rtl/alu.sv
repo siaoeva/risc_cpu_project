@@ -3,9 +3,10 @@
 `timescale 1ns/1ps
 
 module alu(
-    input   logic[31:0] a, b,
-    input   cpu_defs::AluOp  alu_op,
-    output  logic[31:0] result
+    input   logic[31:0]     a, b,
+    input   cpu_defs::AluOp alu_op,
+    output  logic[31:0]     result,
+    output logic            zero
 );
     import cpu_defs::*;
 
@@ -24,5 +25,9 @@ module alu(
             default: result = 32'd0; 
         endcase
     end
+
+    //zero-flag
+    assign zero = (result == 32'd0);
+
 
 endmodule

@@ -28,7 +28,7 @@ package cpu_defs;
         IMM_S = 3'd1,
         IMM_B = 3'd2,
         IMM_U = 3'd3,
-        IMM_J = 3'd4
+        IMM_J = 3'd4,
+        IMM_ILLEGAL = 3'd7
     } ImmType;
-
 endpackage
