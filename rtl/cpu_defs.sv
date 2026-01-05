@@ -31,4 +31,11 @@ package cpu_defs;
         IMM_J = 3'd4,
         IMM_ILLEGAL = 3'd7
     } ImmType;
+
+    typedef enum logic[1:0] {
+        WB_ALU = 2'd0,
+        WB_MEM = 2'd1,
+        WB_PC4 = 2'd2,
+        WB_IMM = 2'd3
+    } WbSel;
 endpackage

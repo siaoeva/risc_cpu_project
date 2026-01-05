@@ -7,31 +7,41 @@ module control(
     input   logic [2:0]         funct3, //further specifies the operation within type provided by opcode
     input   logic [6:0]         funct7, //specifically for R-type ALU operations (and a few others), further differentiates operations
 
-    output  cpu_defs::AluOp     alu_op, //which alu operation to perform for alu.sv
     output  logic               reg_write, //write enable for regfile.sv
     output  logic               mem_write, //write enable for data_mem.sv
+    
+    output  cpu_defs::AluOp     alu_op, //which alu operation to perform for alu.sv
+    output  logic               alu_a_pc, // controls alu's 1st operand, 0 = use rs1, 1 = use PC
+    output  logic               alu_b_imm, //controls alu's 2nd operand, 0 = use rs2, 1 = use immediate
+
     output  logic               branch, //whether it's a branch instruction 
-    output  logic               alu_src, //controls alu's 2nd operand, 0 = use rs2, 1 = use immediate
+    output  logic               jump, //whether it's a jump instruction
+
     output  cpu_defs::ImmType   imm_sel, //which instruction type to correctly extract immediate
-    output  logic               mem_to_reg // 0 if writing ALU result, 1 if writing mem load data to reg
+    output  cpu_defs::WbSel     wb_sel //which data to writeback
 );
     import cpu_defs::*;
 
     always_comb begin : control_logic
         //default
-        alu_op      = ALU_ILLEGAL;
         reg_write   = 0;
         mem_write   = 0;
+        
+        alu_op      = ALU_ILLEGAL;
+        alu_a_pc    = 0;
+        alu_b_imm   = 0;
+
         branch      = 0;
-        alu_src     = 0;
+        jump        = 0;
+
         imm_sel     = IMM_ILLEGAL;
-        mem_to_reg  = 0;
+        wb_sel      = WB_ALU;
         
         case(opcode)
             //R-type (ADD, SUB, AND, OR, XOR, etc. )
             7'b0110011: begin 
                 reg_write   = 1;
-                alu_src     = 0; //use rs2
+                wb_sel      = WB_ALU;
 
                 case ({funct7, funct3})
                     10'b0000000_000:    alu_op = ALU_ADD;
@@ -55,8 +65,9 @@ module control(
             //I-type ALU (ADDI, ANDI, ORI, etc.)
             7'b0010011: begin
                 reg_write   = 1;
-                alu_src     = 1; //use immediate
+                alu_b_imm   = 1; //use immediate
                 imm_sel     = IMM_I;
+                wb_sel      = WB_ALU;
 
                 case (funct3)
                     3'b000:     alu_op = ALU_ADD;
@@ -80,27 +91,28 @@ module control(
                 endcase
             end
 
-            //Load, loads data from dmem to rd
+            //Load, I-type loads data from dmem to rd
             7'b0000011: begin
                 reg_write = 1;
-                alu_src = 1; // use immediate for address = base register (rs1) + immediate offset
                 alu_op = ALU_ADD; // used for address calculation
-                mem_to_reg = 1;
+                alu_b_imm = 1; // use immediate for address = base register (rs1) + immediate offset
+                imm_sel = IMM_I;
+                wb_sel = WB_MEM;
 
             end
 
-            //Store
+            //Store, S-type
             7'b0100011: begin
                 mem_write = 1;
-                alu_src = 1; // base + offset
+                alu_b_imm = 1; // base + offset
                 alu_op = ALU_ADD; // address calc
                 imm_sel = IMM_S;
             end
 
-            //Branch
+            //Branch, B-type
             7'b1100011: begin
                 branch = 1;
-                alu_src = 0; // ALU uses rs2, not immediate
+                alu_b_imm = 0; // ALU uses rs2, not immediate
                 imm_sel = IMM_B;
                 case(funct3)
                     3'b000: alu_op = ALU_SUB; //BEQ, equal, use sub to determine if two are equal. 
@@ -112,10 +124,34 @@ module control(
 
                     default: alu_op = ALU_ILLEGAL;
                 endcase
-
             end
 
-            //add U-type, J-type expansion later
+            //LUI, U-type, load upper immediate
+            7'b0110111: begin
+                reg_write = 1;
+                //alu_b_imm = 1; // select imm
+                //alu_op = ALU_ADD;
+                wb_sel = WB_IMM;
+                imm_sel = IMM_U;
+            end
+
+            //AUIPC, U-type, add upper immediate to PC
+            7'b0010111: begin
+                reg_write = 1;
+                alu_b_imm = 1;
+                alu_op = ALU_ADD;
+                alu_a_pc = 1;
+                imm_sel = IMM_U;
+                wb_sel = WB_ALU;
+            end
+
+            //JAL, J-type, jump and link
+            7'b1101111: begin
+                reg_write = 1;
+                jump = 1;
+                wb_sel = WB_PC4;
+                imm_sel = IMM_J;
+            end
 
         
         endcase
