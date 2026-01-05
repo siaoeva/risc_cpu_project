@@ -50,7 +50,8 @@ module cpu_top(
     logic               alu_b_imm; // use rs2 (0) or imm (1) as alu_b, in alu.sv
 
     logic               branch; // if it's a branch instruction, used in branch_unit.sv
-    logic               jump; // if it's a jump instruction
+    logic               jal; // if it's a jal instruction
+    logic               jalr; // if it's a jalr instruction
 
     cpu_defs::ImmType   imm_sel; // which instr type to generate immediates for imm_gen.sv
     cpu_defs::WbSel     wb_sel; //which data to write back
@@ -67,7 +68,8 @@ module cpu_top(
         .alu_b_imm  (alu_b_imm),
 
         .branch     (branch),
-        .jump       (jump),
+        .jal        (jal),
+        .jalr       (jalr),
 
         .imm_sel    (imm_sel),
         .wb_sel     (wb_sel)
@@ -124,7 +126,7 @@ module cpu_top(
         .branch     (branch),
         .funct3     (funct3),
         .zero       (zero),
-        .alu_lt     (alu_result[0]), // for SLT/SLTU
+        .alu_lt     (alu_result[0]), // for SLT/SLTU, alu returns 32'b1 or 32'b0
         .take_branch(take_branch)
     );
 
@@ -163,7 +165,8 @@ module cpu_top(
     end
 
     //IF, instruction fetch, looping back 
-    assign pc_next =    (take_branch || jump) ? (pc + imm) : 
+    assign pc_next =    jalr ? {alu_result[31:1], 1'b0} : //masking for JALR result
+                        (take_branch | jal) ? (pc + imm) : 
                         (pc + pc_inc);
 
 endmodule

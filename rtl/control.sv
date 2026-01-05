@@ -15,7 +15,8 @@ module control(
     output  logic               alu_b_imm, //controls alu's 2nd operand, 0 = use rs2, 1 = use immediate
 
     output  logic               branch, //whether it's a branch instruction 
-    output  logic               jump, //whether it's a jump instruction
+    output  logic               jal, //whether it's a jal instruction
+    output  logic               jalr, //wheter it's a jalr instruction
 
     output  cpu_defs::ImmType   imm_sel, //which instruction type to correctly extract immediate
     output  cpu_defs::WbSel     wb_sel //which data to writeback
@@ -32,7 +33,8 @@ module control(
         alu_b_imm   = 0;
 
         branch      = 0;
-        jump        = 0;
+        jal         = 0;
+        jalr        = 0;
 
         imm_sel     = IMM_ILLEGAL;
         wb_sel      = WB_ALU;
@@ -148,9 +150,21 @@ module control(
             //JAL, J-type, jump and link
             7'b1101111: begin
                 reg_write = 1;
-                jump = 1;
+                jal = 1;
                 wb_sel = WB_PC4;
                 imm_sel = IMM_J;
+            end
+
+            //JALR, I-type, jump and link register
+            7'b1100111: begin
+                reg_write = 1;
+                jalr = 1;
+
+                alu_op = ALU_ADD;
+                alu_b_imm = 1;
+
+                wb_sel = WB_PC4;
+                imm_sel = IMM_I;
             end
 
         
