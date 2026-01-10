@@ -9,3 +9,6 @@ Run:
 View waveforms:
 gtkwave tb_alu.vcd &
 gtkwave tb_regfile.vcd &
+
+
+verilator -Wall --cc cpu_top.sv control.sv branch_unit.sv load_unit.sv data_mem.sv instr_mem.sv imm_gen.sv alu.sv regfile.sv cpu_defs.sv --exe tb_cpu_top_verilator.cpp

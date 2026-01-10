@@ -40,7 +40,7 @@ module control(
         wb_sel      = WB_ALU;
         
         case(opcode)
-            //R-type (ADD, SUB, AND, OR, XOR, etc. )
+            //OP, R-type , operation (ADD, SUB, AND, OR, XOR, etc. )
             7'b0110011: begin 
                 reg_write   = 1;
                 wb_sel      = WB_ALU;
@@ -64,7 +64,7 @@ module control(
                 endcase
             end
 
-            //I-type ALU (ADDI, ANDI, ORI, etc.)
+            //OP-IMM, I-type ALU (ADDI, ANDI, ORI, etc.)
             7'b0010011: begin
                 reg_write   = 1;
                 alu_b_imm   = 1; //use immediate
@@ -93,7 +93,7 @@ module control(
                 endcase
             end
 
-            //Load, I-type loads data from dmem to rd
+            //LOAD, I-type loads data from dmem to rd
             7'b0000011: begin
                 reg_write = 1;
                 alu_op = ALU_ADD; // used for address calculation
@@ -103,7 +103,7 @@ module control(
 
             end
 
-            //Store, S-type
+            //STORE, S-type, stores data to dmem
             7'b0100011: begin
                 mem_write = 1;
                 alu_b_imm = 1; // base + offset
@@ -111,7 +111,7 @@ module control(
                 imm_sel = IMM_S;
             end
 
-            //Branch, B-type
+            //BRANCH, B-type
             7'b1100011: begin
                 branch = 1;
                 alu_b_imm = 0; // ALU uses rs2, not immediate

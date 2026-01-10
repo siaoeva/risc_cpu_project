@@ -14,7 +14,7 @@ module data_mem (
     logic [31:0] dmem [0:255];
 
     //word-aligned address
-    logic [7:0] word-addr;
+    logic [7:0] word_addr;
     assign word_addr = addr[9:2];
 
     //sync write
