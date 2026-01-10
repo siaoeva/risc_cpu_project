@@ -60,6 +60,7 @@ module cpu_top(
         .opcode     (opcode),
         .funct3     (funct3),
         .funct7     (funct7),
+        
         .reg_write  (reg_write),
         .mem_write  (mem_write),
 
@@ -78,15 +79,15 @@ module cpu_top(
     logic [31:0] rs1_data, rs2_data; // data read from 2 registers
     logic [31:0] wb_data; // writeback data to write into regs[rd]
 
-    regfile rf (
-        .clk    (clk),
-        .we     (reg_write),
-        .rs1    (rs1),
-        .rs2    (rs2),
-        .rd     (rd),
-        .wdata  (wb_data),
-        .rd1    (rs1_data),
-        .rd2    (rs2_data)
+    regfile rf ( 
+        .clk        (clk),
+        .we         (reg_write),
+        .rs1        (rs1),
+        .rs2        (rs2),
+        .rd         (rd),
+        .wdata      (wb_data),
+        .rs1_data   (rs1_data),
+        .rs2_data   (rs2_data)
 
     );
 
