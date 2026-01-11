@@ -22,19 +22,4 @@ _start:
     srl  x10, x2, x1    # x10 = x2 >> x1 = 32'b1010 >> 5 = 32'b0000 = 0
     sra  x11, x3, x1    # x11 = x3 >>> x1 = 32'b10110000 >>> 5 = 32'b11111101 = -3
 
-    # set signature base address for result storage
-    lui x12, 0x80001    # x12 = 0x80001000, signature base address
-
-    # store results from registers into memory
-    
-    sw  x4, 0(x12)      # store word at x4 to dmem at (offset of 0 bytes) + (base address at x12)
-    sw  x5, 4(x12)      # increment offset by 4 bytes (1 word, 32 bits)
-    sw  x6, 8(x12)
-    sw  x7, 12(x12)
-    sw  x8, 16(x12)
-    sw  x9, 20(x12)
-    sw  x10, 24(x12)
-    sw  x11, 28(x12)
-
-
     jal  x0, _start     # loop forever (keeps the program running to check outputs)
