@@ -22,4 +22,6 @@ _start:
     srl  x10, x2, x1    # x10 = x2 >> x1 = 32'b1010 >> 5 = 32'b0000 = 0
     sra  x11, x3, x1    # x11 = x3 >>> x1 = 32'b10110000 >>> 5 = 32'b11111101 = -3
 
-    jal  x0, _start     # loop forever (keeps the program running to check outputs)
+end:
+    jal x0, end             # stay at end
+    

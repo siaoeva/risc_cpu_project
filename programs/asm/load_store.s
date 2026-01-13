@@ -34,4 +34,6 @@ _start:
     lh   x12, 6(x1)        # 0x80FF -> negative
     lhu  x13, 6(x1)        # 0x80FF -> 33023
 
-    jal x0, _start 
+end:
+    jal x0, end             # stay at end
+    
