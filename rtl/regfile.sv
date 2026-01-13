@@ -15,12 +15,15 @@ module regfile(
     // 32 x 32-bit registers
     logic [31:0] regs [31:0];
 
+
+
     // async reads
     assign rs1_data = (rs1 == 0) ? 32'd0 : regs[rs1];
     assign rs2_data = (rs2 == 0) ? 32'd0 : regs[rs2];
 
     //sync writes
     always_ff @(posedge clk) begin 
+        regs[0] <= 32'd0; // enforce x0 = 0
         if (we && rd != 0)
             regs[rd] <= wdata;
     end

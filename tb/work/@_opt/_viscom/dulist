@@ -1,11 +1,11 @@
 2 8 cpu_defs 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 27 0
 2 9 instr_mem 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 15 0
 2 7 control 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 131072 0 210 0
-2 7 regfile 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 41 0
+1 7 regfile 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 44 0
 2 7 imm_gen 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 69 0
 2 3 alu 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 77 0
 2 11 branch_unit 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 49 0
 2 8 data_mem 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 28 0
 2 9 load_unit 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 108 0
-1 7 cpu_top 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 180 0
+2 7 cpu_top 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 180 0
 2 6 tb_cpu 4 fast 39 C:/Users/evasi/risc_cpu_project/tb/work 0 0 0 0 24 0
