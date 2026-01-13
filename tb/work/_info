@@ -40,7 +40,7 @@ valu
 Z3 2../rtl/alu.sv|../rtl/branch_unit.sv|../rtl/control.sv|../rtl/cpu_defs.sv|../rtl/cpu_top.sv|../rtl/data_mem.sv|../rtl/imm_gen.sv|../rtl/instr_mem.sv|../rtl/load_unit.sv|../rtl/regfile.sv
 Z4 DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
 Z5 DXx4 work 8 cpu_defs 0 22 2e=0L[IoLTPLT<Wb7AfNl0
-Z6 !s110 1768094579
+Z6 !s110 1768319996
 !i10b 1
 !s100 8;mozjEcO;kVhkof1oIJU2
 Ie_?V3XkB4abKz>WFLPhM11
@@ -49,14 +49,14 @@ R2
 Z7 w1768059600
 8../rtl/alu.sv
 F../rtl/alu.sv
-!i122 45
+!i122 59
 L0 5 29
 Z8 VDg1SIo80bB@j0V0VzS_@n1
 Z9 OL;L;2025.2;82
 r1
 !s85 0
 31
-Z10 !s108 1768094579.000000
+Z10 !s108 1768319996.000000
 Z11 !s107 ../rtl/regfile.sv|../rtl/load_unit.sv|../rtl/instr_mem.sv|../rtl/imm_gen.sv|../rtl/data_mem.sv|../rtl/cpu_top.sv|../rtl/cpu_defs.sv|../rtl/control.sv|../rtl/branch_unit.sv|../rtl/alu.sv|
 Z12 !s90 -reportprogress|300|-sv|+acc|../rtl/alu.sv|../rtl/branch_unit.sv|../rtl/control.sv|../rtl/cpu_defs.sv|../rtl/cpu_top.sv|../rtl/data_mem.sv|../rtl/imm_gen.sv|../rtl/instr_mem.sv|../rtl/load_unit.sv|../rtl/regfile.sv|
 !i113 0
@@ -74,7 +74,7 @@ R2
 R7
 8../rtl/branch_unit.sv
 F../rtl/branch_unit.sv
-!i122 45
+!i122 59
 Z15 L0 5 23
 R8
 R9
@@ -100,7 +100,7 @@ R2
 R7
 8../rtl/control.sv
 F../rtl/control.sv
-!i122 45
+!i122 59
 L0 5 170
 R8
 R9
@@ -125,7 +125,7 @@ R2
 R7
 8../rtl/cpu_defs.sv
 F../rtl/cpu_defs.sv
-!i122 45
+!i122 59
 L0 4 0
 V2e=0L[IoLTPLT<Wb7AfNl0
 R9
@@ -151,7 +151,7 @@ R2
 w1768076676
 8../rtl/cpu_top.sv
 F../rtl/cpu_top.sv
-!i122 45
+!i122 59
 L0 5 169
 R8
 R9
@@ -176,7 +176,7 @@ R2
 w1768070641
 8../rtl/data_mem.sv
 F../rtl/data_mem.sv
-!i122 45
+!i122 59
 R15
 R8
 R9
@@ -202,7 +202,7 @@ R2
 R7
 8../rtl/imm_gen.sv
 F../rtl/imm_gen.sv
-!i122 45
+!i122 59
 L0 6 19
 R8
 R9
@@ -227,7 +227,7 @@ R2
 w1768074893
 8../rtl/instr_mem.sv
 F../rtl/instr_mem.sv
-!i122 45
+!i122 59
 L0 3 17
 R8
 R9
@@ -252,7 +252,7 @@ R2
 R7
 8../rtl/load_unit.sv
 F../rtl/load_unit.sv
-!i122 45
+!i122 59
 L0 3 44
 R8
 R9
@@ -277,7 +277,7 @@ R2
 w1768091529
 8../rtl/regfile.sv
 F../rtl/regfile.sv
-!i122 45
+!i122 59
 L0 4 28
 R8
 R9
@@ -303,7 +303,7 @@ R2
 R7
 8tb_alu.sv
 Ftb_alu.sv
-!i122 46
+!i122 60
 L0 6 73
 R8
 R9
@@ -328,7 +328,7 @@ R2
 w1768069428
 8tb_cpu.sv
 Ftb_cpu.sv
-!i122 46
+!i122 60
 L0 3 21
 R8
 R9
@@ -353,7 +353,7 @@ R2
 R7
 8tb_regfile.sv
 Ftb_regfile.sv
-!i122 46
+!i122 60
 L0 5 67
 R8
 R9
