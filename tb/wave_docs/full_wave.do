@@ -29,12 +29,10 @@ add wave -noupdate -label jalr /tb_cpu/cpu/jalr
 add wave -noupdate -label imm_type_sel /tb_cpu/cpu/imm_sel
 add wave -noupdate -label writeback_sel /tb_cpu/cpu/wb_sel
 
-add wave -noupdate -divider REGFILE
+add wave -noupdate -divider REGFILE_IMMEDIATE
 add wave -noupdate -label reg1_data -radix decimal /tb_cpu/cpu/rs1_data
 add wave -noupdate -label reg2_data -radix decimal /tb_cpu/cpu/rs2_data
 add wave -noupdate -label wb_data -radix decimal /tb_cpu/cpu/wb_data
-
-add wave -noupdate -divider IMMEDIATE
 add wave -noupdate -label imm /tb_cpu/cpu/imm
 
 add wave -noupdate -divider ALU
@@ -66,7 +64,14 @@ add wave -noupdate -label x8 -radix decimal /tb_cpu/cpu/rf/regs[8]
 add wave -noupdate -label x9 -radix decimal /tb_cpu/cpu/rf/regs[9]
 add wave -noupdate -label x10 -radix decimal /tb_cpu/cpu/rf/regs[10]
 add wave -noupdate -label x11 -radix decimal /tb_cpu/cpu/rf/regs[11]
-add wave -noupdate -label sig_base_addr -radix decimal /tb_cpu/cpu/rf/regs[12]
+add wave -noupdate -label x12 -radix decimal /tb_cpu/cpu/rf/regs[12]
+add wave -noupdate -label x13 -radix decimal /tb_cpu/cpu/rf/regs[13]
+
+add wave -noupdate -divider DATA_MEMORY
+add wave -noupdate -label word0 -radix hexadecimal /tb_cpu/cpu/dmem/dmem[0]
+add wave -noupdate -label word4 -radix hexadecimal /tb_cpu/cpu/dmem/dmem[1]
+
+
 
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {80000 ps} 0}

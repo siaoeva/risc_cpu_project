@@ -12,6 +12,8 @@ add wave -noupdate -label reg2_addr /tb_cpu/cpu/rs2
 add wave -noupdate -label reg_destination /tb_cpu/cpu/rd
 
 add wave -noupdate -divider CONTROL_SIGNALS
+add wave -noupdate -label reg_write_en /tb_cpu/cpu/reg_write
+add wave -noupdate -label mem_write_en /tb_cpu/cpu/mem_write
 add wave -noupdate -label alu_op /tb_cpu/cpu/alu_op
 add wave -noupdate -label alu_b_imm /tb_cpu/cpu/alu_b_imm
 add wave -noupdate -label jal /tb_cpu/cpu/jal
@@ -29,8 +31,13 @@ add wave -noupdate -label alu_a /tb_cpu/cpu/alu_a
 add wave -noupdate -label alu_b /tb_cpu/cpu/alu_b
 add wave -noupdate -label alu_result /tb_cpu/cpu/alu_result
 
+add wave -noupdate -divider EXECUTE_GEN
+add wave -noupdate -label raw_mem_data_loaded /tb_cpu/cpu/mem_data
+add wave -noupdate -label formatted_mem_data /tb_cpu/cpu/load_data
+
 add wave -noupdate -divider WRITEBACK
 add wave -noupdate -label reg_write_en /tb_cpu/cpu/reg_write
+add wave -noupdate -label writeback_sel /tb_cpu/cpu/wb_sel
 add wave -noupdate -label wb_data /tb_cpu/cpu/wb_data
 
 add wave -noupdate -divider REGISTERS
@@ -46,6 +53,12 @@ add wave -noupdate -label x8 -radix decimal /tb_cpu/cpu/rf/regs[8]
 add wave -noupdate -label x9 -radix decimal /tb_cpu/cpu/rf/regs[9]
 add wave -noupdate -label x10 -radix decimal /tb_cpu/cpu/rf/regs[10]
 add wave -noupdate -label x11 -radix decimal /tb_cpu/cpu/rf/regs[11]
+add wave -noupdate -label x12 -radix decimal /tb_cpu/cpu/rf/regs[12]
+add wave -noupdate -label x13 -radix decimal /tb_cpu/cpu/rf/regs[13]
+
+add wave -noupdate -divider DATA_MEMORY
+add wave -noupdate -label word0 -radix hexadecimal /tb_cpu/cpu/dmem/dmem[0]
+add wave -noupdate -label word4 -radix hexadecimal /tb_cpu/cpu/dmem/dmem[1]
 
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {80000 ps} 0}
